@@ -4,6 +4,10 @@
  */
 package Vistas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import org.bson.Document;
+
 /**
  *
  * @author anton
@@ -16,6 +20,7 @@ public class OperacionesPais extends javax.swing.JDialog {
 	public OperacionesPais(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+		inicializar();
 	}
 
 	/**
@@ -53,6 +58,11 @@ public class OperacionesPais extends javax.swing.JDialog {
         });
 
         btnAñadirPais.setText("Añadir Pais");
+        btnAñadirPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirPaisActionPerformed(evt);
+            }
+        });
 
         txtNombrePais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,26 +104,32 @@ public class OperacionesPais extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(cmbContinente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNHabitantes)
-                    .addComponent(txtNombrePais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNHabitantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombrePais))
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAñadirPais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 44, Short.MAX_VALUE)
+                        .addComponent(cmbContinente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNHabitantes)
+                            .addComponent(txtNombrePais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNHabitantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombrePais))
+                        .addGap(0, 52, Short.MAX_VALUE))
+                    .addComponent(btnAñadirPais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         lblAnadirPais.setText("Añadir Pais");
 
         btnCerrar.setText("CERRAR");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         lblEliminarPais.setText("Eliminar Pais");
 
@@ -121,6 +137,11 @@ public class OperacionesPais extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnEliminarPais.setText("Eliminar Pais");
+        btnEliminarPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPaisActionPerformed(evt);
+            }
+        });
 
         cmbPaises.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -182,12 +203,62 @@ public class OperacionesPais extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNHabitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNHabitantesActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_txtNHabitantesActionPerformed
 
     private void txtNombrePaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePaisActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_txtNombrePaisActionPerformed
+
+    private void btnAñadirPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirPaisActionPerformed
+		String nombre = txtNombrePais.getText().trim();
+		String habitantesStr = txtNHabitantes.getText().trim();
+
+		int habitantes = 0;
+		try {
+			habitantes = Integer.parseInt(habitantesStr);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El número de habitantes debe ser un número entero positivo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (nombre.isBlank() || habitantesStr.isBlank() || habitantes < 1) {
+
+			JOptionPane.showMessageDialog(this, "Los datos introducidos estan vacios o son erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+
+		} else {
+
+			String continente = cmbContinente.getSelectedItem().toString();
+
+			if (Main.conector.existePais(nombre)) {
+				JOptionPane.showMessageDialog(this, "El país ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+			} else if (Main.conector.anadirPais(nombre, habitantes, continente)) {
+				JOptionPane.showMessageDialog(this, "País añadido con éxito.");
+				txtNombrePais.setText("");
+				txtNHabitantes.setText("");
+				cargarComboPaises();
+			}
+		}
+
+
+    }//GEN-LAST:event_btnAñadirPaisActionPerformed
+
+    private void btnEliminarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPaisActionPerformed
+		if (cmbPaises.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Seleccione un país para eliminar.");
+		} else {
+			String pais = cmbPaises.getSelectedItem().toString();
+			if (Main.conector.eliminarPais(pais)) {
+				JOptionPane.showMessageDialog(this, "País eliminado con éxito.");
+				cargarComboPaises();
+			}
+		}
+
+
+    }//GEN-LAST:event_btnEliminarPaisActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+		dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -232,21 +303,42 @@ public class OperacionesPais extends javax.swing.JDialog {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAñadirContinente1;
     private javax.swing.JButton btnAñadirPais;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEliminarPais;
     private javax.swing.JComboBox<String> cmbContinente;
     private javax.swing.JComboBox<String> cmbPaises;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblAnadirPais;
     private javax.swing.JLabel lblEliminarPais;
     private javax.swing.JLabel lblNHabitantes;
     private javax.swing.JLabel lblNombrePais;
-    private javax.swing.JTextField txtContinente1;
     private javax.swing.JTextField txtNHabitantes;
     private javax.swing.JTextField txtNombrePais;
     // End of variables declaration//GEN-END:variables
+
+	private void inicializar() {
+		ArrayList<String> continentes = Main.conector.obtenerContinentes();
+
+		cmbContinente.removeAllItems();
+		for (String c : continentes) {
+			cmbContinente.addItem(c);
+		}
+
+		cargarComboPaises();
+
+	}
+
+	private void cargarComboPaises() {
+		cmbPaises.removeAllItems();
+
+		if (cmbContinente.getSelectedItem() != null) {
+			ArrayList<Document> paises = Main.conector.obtenerPaises();
+			for (Document p : paises) {
+				cmbPaises.addItem(p.getString("nombre"));
+			}
+		}
+	}
+
 }

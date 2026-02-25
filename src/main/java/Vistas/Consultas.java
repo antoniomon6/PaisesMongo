@@ -4,6 +4,9 @@
  */
 package Vistas;
 
+import java.util.ArrayList;
+import org.bson.Document;
+
 /**
  *
  * @author anton
@@ -16,6 +19,8 @@ public class Consultas extends javax.swing.JDialog {
 	public Consultas(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+		inicializar();
+		txtHabitantesPersonas.setEditable(false);
 	}
 
 	/**
@@ -33,7 +38,8 @@ public class Consultas extends javax.swing.JDialog {
         lblNumHabitantesContinente = new javax.swing.JLabel();
         lblNumHabitantes = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        lblPaisesHabitantesTexto = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtHabitantesPersonas = new javax.swing.JTextArea();
         lblPaisesYHabitantes = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JButton();
         lblAnadirPais2 = new javax.swing.JLabel();
@@ -44,6 +50,11 @@ public class Consultas extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         cmbContinente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbContinente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbContinenteActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -74,28 +85,32 @@ public class Consultas extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblPaisesHabitantesTexto.setBackground(new java.awt.Color(255, 255, 255));
-        lblPaisesHabitantesTexto.setText("hgdsfs");
-        lblPaisesHabitantesTexto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtHabitantesPersonas.setColumns(20);
+        txtHabitantesPersonas.setRows(5);
+        jScrollPane1.setViewportView(txtHabitantesPersonas);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblPaisesHabitantesTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblPaisesHabitantesTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 183, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
-        lblPaisesYHabitantes.setText("Añadir Pais");
+        lblPaisesYHabitantes.setText("Paises Y Habitantes");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,19 +119,19 @@ public class Consultas extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblPaisesYHabitantes)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmbContinente, 0, 235, Short.MAX_VALUE)
+                                .addComponent(cmbContinente, 0, 211, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblNumHabitantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(19, 19, 19))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblPaisesYHabitantes)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,8 +150,13 @@ public class Consultas extends javax.swing.JDialog {
         );
 
         btnCerrar.setText("CERRAR");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
-        lblAnadirPais2.setText("Añadir Pais");
+        lblAnadirPais2.setText("Consultas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,30 +168,35 @@ public class Consultas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lblAnadirPais2)
-                    .addContainerGap(350, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                        .addGap(240, 240, 240))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnadirPais2)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
+                .addComponent(lblAnadirPais2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lblAnadirPais2)
-                    .addContainerGap(380, Short.MAX_VALUE)))
+                .addGap(51, 51, 51))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+		dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void cmbContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbContinenteActionPerformed
+		actualizarConsulta();
+    }//GEN-LAST:event_cmbContinenteActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -221,10 +246,43 @@ public class Consultas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnadirPais2;
     private javax.swing.JLabel lblNumHabitantes;
     private javax.swing.JLabel lblNumHabitantesContinente;
-    private javax.swing.JLabel lblPaisesHabitantesTexto;
     private javax.swing.JLabel lblPaisesYHabitantes;
+    private javax.swing.JTextArea txtHabitantesPersonas;
     // End of variables declaration//GEN-END:variables
+
+	private void inicializar() {
+		ArrayList<String> continentes = Main.conector.obtenerContinentes();
+		cmbContinente.removeAllItems();
+		for (String c : continentes) {
+			cmbContinente.addItem(c);
+		}
+		// Llamar la primera vez
+		actualizarConsulta();
+	}
+
+	private void actualizarConsulta() {
+		if (cmbContinente.getSelectedItem() != null) {
+			String continente = cmbContinente.getSelectedItem().toString();
+			ArrayList<Document> paises = Main.conector.obtenerPaisesPorContinente(continente);
+
+			long sumaHabitantes = 0;
+
+			String salida="";
+			for (Document p : paises) {
+				String nombre = p.getString("nombre");
+				int hab = p.getInteger("habitantes");
+				salida+= nombre+" | "+hab+"\n ";
+				sumaHabitantes += hab;
+			}
+
+			txtHabitantesPersonas.setText(salida);
+			lblNumHabitantesContinente.setText(sumaHabitantes+"");
+		}
+
+	}
+
 }

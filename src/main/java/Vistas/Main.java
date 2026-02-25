@@ -4,9 +4,11 @@
  */
 package Vistas;
 
+import Conector.Conector;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 public class Main extends javax.swing.JFrame {
 
 	private Image fondo;
+	public static Conector conector = new Conector();
 
 	/**
 	 * Creates new form Main
@@ -23,6 +26,13 @@ public class Main extends javax.swing.JFrame {
 	public Main() {
 		initComponents();
 		cargarFondo();
+		if (!conector.conectar()) {
+			JOptionPane.showMessageDialog(this,
+					"No hay Conexion con la BD.",
+					"Atención",
+					JOptionPane.WARNING_MESSAGE);
+		}
+
 	}
 
 	/**
@@ -111,7 +121,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-		new Consultas(this, true).setVisible(true);
+
+		if (conector.obtenerContinentes().isEmpty()) {
+			JOptionPane.showMessageDialog(this,
+					"No hay continentes. Debe crear uno primero.",
+					"Atención",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			new Consultas(this, true).setVisible(true);
+		}
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -119,7 +137,14 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-		new OperacionesPais(this, true).setVisible(true);
+		if (conector.obtenerContinentes().isEmpty()) {
+			JOptionPane.showMessageDialog(this,
+					"No hay continentes. Debe crear uno primero.",
+					"Atención",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			new OperacionesPais(this, true).setVisible(true);
+		}
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 	/**

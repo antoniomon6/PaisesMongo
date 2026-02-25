@@ -4,12 +4,15 @@
  */
 package Vistas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author anton
  */
 public class OperacionesContinente extends javax.swing.JDialog {
 
+	
 	/**
 	 * Creates new form OperacionesContinentes
 	 */
@@ -45,6 +48,11 @@ public class OperacionesContinente extends javax.swing.JDialog {
         });
 
         btnAñadirContinente.setText("Añadir Continente");
+        btnAñadirContinente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirContinenteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,6 +81,11 @@ public class OperacionesContinente extends javax.swing.JDialog {
         lblAnadirContinente.setText("Añadir Continente");
 
         btnCerrar.setText("CERRAR");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,8 +119,26 @@ public class OperacionesContinente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContinenteActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_txtContinenteActionPerformed
+
+    private void btnAñadirContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirContinenteActionPerformed
+		String nombre = txtContinente.getText().trim();
+
+		if (nombre.isBlank()) {
+			JOptionPane.showMessageDialog(this, "El nombre no puede estar vacio.", "Error", JOptionPane.ERROR_MESSAGE);
+		}else if (Main.conector.existeContinente(nombre)) {
+			JOptionPane.showMessageDialog(this, "El continente ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+
+		}else if (Main.conector.anadirContinente(nombre)) {
+			JOptionPane.showMessageDialog(this, "Continente añadido con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			txtContinente.setText("");
+		}
+    }//GEN-LAST:event_btnAñadirContinenteActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
 	/**
 	 * @param args the command line arguments
