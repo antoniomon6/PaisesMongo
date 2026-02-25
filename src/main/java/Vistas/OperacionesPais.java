@@ -318,6 +318,10 @@ public class OperacionesPais extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombrePais;
     // End of variables declaration//GEN-END:variables
 
+	/**
+	 * Inicializa los componentes de la ventana al abrirse. Rellena el ComboBox
+	 * principal
+	 */
 	private void inicializar() {
 		ArrayList<String> continentes = Main.conector.obtenerContinentes();
 
@@ -330,6 +334,10 @@ public class OperacionesPais extends javax.swing.JDialog {
 
 	}
 
+	/**
+	 * Actualiza el ComboBox de países mostrados en pantalla.Se invoca al
+	 * iniciar la ventana y cada vez que se añade/elimina un país.
+	 */
 	private void cargarComboPaises() {
 		cmbPaises.removeAllItems();
 

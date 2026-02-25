@@ -254,6 +254,10 @@ public class Consultas extends javax.swing.JDialog {
     private javax.swing.JTextArea txtHabitantesPersonas;
     // End of variables declaration//GEN-END:variables
 
+	/**
+	 * Inicializa los componentes de la vista de Consultas cargando los
+	 * continentes disponibles en el ComboBox
+	 */
 	private void inicializar() {
 		ArrayList<String> continentes = Main.conector.obtenerContinentes();
 		cmbContinente.removeAllItems();
@@ -264,6 +268,11 @@ public class Consultas extends javax.swing.JDialog {
 		actualizarConsulta();
 	}
 
+	/**
+	 * Ejecuta la consulta a la base de datos filtrando los países por el
+	 * continente seleccionado. Recorre los resultados para armar el listado
+	 * visual (país y habitantes)
+	 */
 	private void actualizarConsulta() {
 		if (cmbContinente.getSelectedItem() != null) {
 			String continente = cmbContinente.getSelectedItem().toString();
@@ -271,16 +280,16 @@ public class Consultas extends javax.swing.JDialog {
 
 			long sumaHabitantes = 0;
 
-			String salida="";
+			String salida = "";
 			for (Document p : paises) {
 				String nombre = p.getString("nombre");
 				int hab = p.getInteger("habitantes");
-				salida+= nombre+" | "+hab+"\n ";
+				salida += nombre + " | " + hab + "\n ";
 				sumaHabitantes += hab;
 			}
 
 			txtHabitantesPersonas.setText(salida);
-			lblNumHabitantesContinente.setText(sumaHabitantes+"");
+			lblNumHabitantesContinente.setText(sumaHabitantes + "");
 		}
 
 	}

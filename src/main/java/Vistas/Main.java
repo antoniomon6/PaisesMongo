@@ -21,7 +21,8 @@ public class Main extends javax.swing.JFrame {
 	public static Conector conector = new Conector();
 
 	/**
-	 * Creates new form Main
+	 * Constructor principal de la aplicación. Intenta establecer la conexión
+	 * con MongoDB al arrancar. Si falla la conexion muestra un error.
 	 */
 	public Main() {
 		initComponents();
